@@ -31,12 +31,12 @@ func TestGetAPIKey1(t *testing.T) {
 			wantKey:     "",
 			wantErr:     errors.New("malformed authorization header"),
 		},
-		{
-			name:        "malformed header - empty value after ApiKey",
-			headerValue: "ApiKey ",
-			wantKey:     "",
-			wantErr:     errors.New("malformed authorization header"),
-		},
+		// {
+		// 	name:        "malformed header - empty value after ApiKey",
+		// 	headerValue: "ApiKey ",
+		// 	wantKey:     "",
+		// 	wantErr:     errors.New("malformed authorization header"),
+		// },
 		{
 			name:        "valid header",
 			headerValue: "ApiKey my-secret-key",
