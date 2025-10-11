@@ -43,5 +43,5 @@ jobs:
 
             - name: 'Build Docker'
               run: | 
-                gcloud builds submit --tag us-central1-docker.pkg.dev/notely-474622/notely-ar-repo/notely:latest . --dockerfile=notely.Dockerfile            
+                gcloud builds submit --tag us-central1-docker.pkg.dev/notely-474622/notely-ar-repo/notely:latest ./..learn-cicd-starter
 
