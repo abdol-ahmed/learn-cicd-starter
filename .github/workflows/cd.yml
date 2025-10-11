@@ -10,6 +10,9 @@ jobs:
         name: Deploy
         runs-on: ubuntu-latest
 
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
         # Add "id-token" with the intended permissions.
         permissions:
           contents: 'read'
@@ -23,7 +26,12 @@ jobs:
               uses: actions/setup-go@v5
               with:
                 go-version: "1.25.1"
-                
+
+            - name: Install Goose
+              uses: mscno/setup-goose@v1
+              with:
+                version: v3.25.0 # Specify the desired Goose version, or 'latest' for the newest release
+
             - name: Build Production Binary
               run: scripts/buildprod.sh
         
@@ -43,6 +51,9 @@ jobs:
             - name: Build and push to Artifact Registry
               run: |
                 gcloud builds submit --tag us-central1-docker.pkg.dev/notely-474622/notely-ar-repo/notely:latest .
+
+            - name: Run Migrations
+              run: scripts/migrateup.sh
             
             - name: Deploy to Cloud Run
               run: gcloud run deploy notely --image us-central1-docker.pkg.dev/notely-474622/notely-ar-repo/notely:latest --region us-central1 --allow-unauthenticated --project notely-474622 --max-instances=4
