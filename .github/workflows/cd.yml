@@ -41,7 +41,12 @@ jobs:
             - name: 'Use gcloud CLI'
               run: 'gcloud info'
 
-            - name: 'Build Docker'
+            - name: Check current directory
+              run: |
+                pwd  
+
+            - name: Build and push to Artifact Registry
               working-directory: ../..
-              run: gcloud builds submit --tag us-central1-docker.pkg.dev/notely-474622/notely-ar-repo/notely:latest .
+              run: |
+                gcloud builds submit --tag us-central1-docker.pkg.dev/notely-474622/notely-ar-repo/notely:latest .
 
